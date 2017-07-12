@@ -7,10 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DDA8D041F162F050009C19E /* UIButton+WMImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8CFC1F162F050009C19E /* UIButton+WMImage.swift */; };
+		3DDA8D051F162F050009C19E /* UIImageView+WMImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8CFD1F162F050009C19E /* UIImageView+WMImage.swift */; };
+		3DDA8D061F162F050009C19E /* UIView+WMImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8CFE1F162F050009C19E /* UIView+WMImage.swift */; };
+		3DDA8D071F162F050009C19E /* WMImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8D001F162F050009C19E /* WMImageDownloader.swift */; };
+		3DDA8D081F162F050009C19E /* WMImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8D011F162F050009C19E /* WMImageManager.swift */; };
+		3DDA8D091F162F050009C19E /* WMImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8D021F162F050009C19E /* WMImageStore.swift */; };
+		3DDA8D0A1F162F050009C19E /* WMImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8D031F162F050009C19E /* WMImageUploader.swift */; };
+		3DDA8D0C1F162F490009C19E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8D0B1F162F490009C19E /* String+Extension.swift */; };
 		73F2E9A51F09394800A5CC62 /* WMNetImageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F2E9A31F09394800A5CC62 /* WMNetImageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3DDA8CFC1F162F050009C19E /* UIButton+WMImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+WMImage.swift"; sourceTree = "<group>"; };
+		3DDA8CFD1F162F050009C19E /* UIImageView+WMImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+WMImage.swift"; sourceTree = "<group>"; };
+		3DDA8CFE1F162F050009C19E /* UIView+WMImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+WMImage.swift"; sourceTree = "<group>"; };
+		3DDA8D001F162F050009C19E /* WMImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMImageDownloader.swift; sourceTree = "<group>"; };
+		3DDA8D011F162F050009C19E /* WMImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMImageManager.swift; sourceTree = "<group>"; };
+		3DDA8D021F162F050009C19E /* WMImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMImageStore.swift; sourceTree = "<group>"; };
+		3DDA8D031F162F050009C19E /* WMImageUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMImageUploader.swift; sourceTree = "<group>"; };
+		3DDA8D0B1F162F490009C19E /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		3DDA8D0E1F1630640009C19E /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		73F2E9A01F09394800A5CC62 /* WMNetImageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WMNetImageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73F2E9A31F09394800A5CC62 /* WMNetImageKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMNetImageKit.h; sourceTree = "<group>"; };
 		73F2E9A41F09394800A5CC62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -27,6 +44,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3DDA8CFB1F162F050009C19E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				3DDA8CFC1F162F050009C19E /* UIButton+WMImage.swift */,
+				3DDA8CFD1F162F050009C19E /* UIImageView+WMImage.swift */,
+				3DDA8CFE1F162F050009C19E /* UIView+WMImage.swift */,
+				3DDA8D0B1F162F490009C19E /* String+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		3DDA8CFF1F162F050009C19E /* NetImae */ = {
+			isa = PBXGroup;
+			children = (
+				3DDA8D011F162F050009C19E /* WMImageManager.swift */,
+				3DDA8D021F162F050009C19E /* WMImageStore.swift */,
+				3DDA8D001F162F050009C19E /* WMImageDownloader.swift */,
+				3DDA8D031F162F050009C19E /* WMImageUploader.swift */,
+			);
+			name = NetImae;
+			path = NetImge;
+			sourceTree = "<group>";
+		};
+		3DDA8D0D1F1630640009C19E /* ModuleMap */ = {
+			isa = PBXGroup;
+			children = (
+				3DDA8D0E1F1630640009C19E /* module.modulemap */,
+			);
+			path = ModuleMap;
+			sourceTree = "<group>";
+		};
 		73F2E9961F09394800A5CC62 = {
 			isa = PBXGroup;
 			children = (
@@ -47,6 +95,9 @@
 			isa = PBXGroup;
 			children = (
 				73F2E9A31F09394800A5CC62 /* WMNetImageKit.h */,
+				3DDA8D0D1F1630640009C19E /* ModuleMap */,
+				3DDA8CFB1F162F050009C19E /* Extension */,
+				3DDA8CFF1F162F050009C19E /* NetImae */,
 				73F2E9A41F09394800A5CC62 /* Info.plist */,
 			);
 			path = WMNetImageKit;
@@ -131,6 +182,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DDA8D0C1F162F490009C19E /* String+Extension.swift in Sources */,
+				3DDA8D071F162F050009C19E /* WMImageDownloader.swift in Sources */,
+				3DDA8D091F162F050009C19E /* WMImageStore.swift in Sources */,
+				3DDA8D061F162F050009C19E /* UIView+WMImage.swift in Sources */,
+				3DDA8D051F162F050009C19E /* UIImageView+WMImage.swift in Sources */,
+				3DDA8D041F162F050009C19E /* UIButton+WMImage.swift in Sources */,
+				3DDA8D0A1F162F050009C19E /* WMImageUploader.swift in Sources */,
+				3DDA8D081F162F050009C19E /* WMImageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +312,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.william.WMNetImageKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/WMNetImageKit/ModuleMap/";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -272,6 +332,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.william.WMNetImageKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/WMNetImageKit/ModuleMap/";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -295,6 +356,7 @@
 				73F2E9AA1F09394800A5CC62 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
