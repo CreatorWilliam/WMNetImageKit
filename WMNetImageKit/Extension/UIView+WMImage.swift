@@ -198,21 +198,21 @@ extension UIView {
       
     }
     
-    switch mode {
-    case .fill:
-      
-      self.contentMode = .scaleAspectFill
-      self.clipsToBounds = true
-      
-    case .fit:
-      
-      self.contentMode = .scaleAspectFit
-      
-    default:
-      
-      self.contentMode = .scaleToFill
-      
-    }
+//    switch mode {
+//    case .fill:
+//      
+//      self.contentMode = .scaleAspectFill
+//      self.clipsToBounds = true
+//      
+//    case .fit:
+//      
+//      self.contentMode = .scaleAspectFit
+//      
+//    default:
+//      
+//      self.contentMode = .scaleToFill
+//      
+//    }
     
     //设置图片
     WMImageManager.showImage(from: url,
