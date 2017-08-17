@@ -103,18 +103,19 @@ extension UIView {
                    loadType: LoadType,
                    mode: UIImage.WMDrawMode,
                    ignore: Bool = false,
-                   handle: @escaping ((UIImage) -> Void)) {
+                   handle: @escaping ((UIImage?) -> Void)) {
     
     //过滤多次相同地址赋值
-    if self.downloadingImageURL == url && !ignore {
-      
-      return
-    }
+    if self.downloadingImageURL == url && !ignore { return }
     
     //若设置了占位图，则显示站位图
     if let placeholder = placeholder, let placeholderImage = UIImage(named: placeholder)?.wm_draw() {
       
       handle(placeholderImage)
+      
+    } else {
+      
+      handle(nil)
     }
     
     //将视图与对应URL绑定，确保重用过程中，图片刷新不错乱
