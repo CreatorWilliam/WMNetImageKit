@@ -157,12 +157,16 @@ public class WMImageManager: NSObject {
     return url
   }
   
-  public class func storeImageFromInternet(_ url: URL) {
+  public class func storeImageFromInternet(_ url: URL, complete: @escaping CompleteAction) {
     
     DispatchQueue.global().async {
       
       //从磁盘获取
-      if let _ = WMImageStore.fromDisk(with: url) { return }
+      if let image = WMImageStore.fromDisk(with: url) {
+        
+        complete(image)
+        return
+      }
       
       //从网络获取
       WMImageDownloader.fromInternet(url, progress: { (recieved, total, partialData) in
@@ -170,10 +174,11 @@ public class WMImageManager: NSObject {
 
       }, complete: { (imageData) in
         
-        guard let _ = UIImage(data: imageData) else { return }
+        guard let image = UIImage(data: imageData) else { return }
         
         WMImageStore.toDisk(for: imageData, with: url)
         
+          complete(image)
         })
       
       
