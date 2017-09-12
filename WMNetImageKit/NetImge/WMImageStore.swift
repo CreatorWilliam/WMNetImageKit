@@ -11,7 +11,7 @@ import Foundation
 internal class WMImageStore {
   
   //let imageCache = NSCache<NSURL, UIImage>()
-  var imageCache = [URL : UIImage]()
+  var imageCache: [URL : UIImage] = [:]
   fileprivate static let `default` = WMImageStore()
   
   init() {
@@ -77,6 +77,7 @@ internal extension WMImageStore {
       // TODO:图片写入磁盘异常处理(TODO)
       return
     }
+    
   }
   
 }
@@ -121,7 +122,7 @@ internal extension WMImageStore {
   /// 清除内存缓存的图片
   @objc func clearMemoryCache() -> Void {
     
-    imageCache.removeAll()
+    self.imageCache.removeAll()
   }
   
   
@@ -151,15 +152,16 @@ internal extension WMImageStore {
   
   /// 磁盘缓存的图片总大小
   ///
-  /// - Returns: 缓存的图片大小
+  /// - Returns: 缓存的图片大小，单位B
   class func chacheSize() -> Int64 {
     
-    let path = cacheDirectoryPath()
+    let path = WMImageStore.cacheDirectoryPath()
     var size: Int64 = 0
     let fileManager = FileManager.default
     
     guard let subpaths = FileManager.default.subpaths(atPath: path) else { return 0 }
     
+    //遍历缓存文件夹下所有文件的大小
     for subpath in subpaths {
       
       let imagePath = path.appendingFormat("/%@", subpath)
@@ -204,9 +206,7 @@ internal extension WMImageStore {
   /// - Returns: 图片所在路径
   class func imagePath(with name: String) -> String {
     
-    let path = cacheDirectoryPath().appendingFormat("/%@", name)
-    
-    return path
+    return WMImageStore.cacheDirectoryPath().appendingFormat("/%@", name)
   }
   
   /// 图片缓存文件夹路径
@@ -217,10 +217,7 @@ internal extension WMImageStore {
     let libraryPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first!
     let imageDiskCacheDirectoryPath = libraryPath.appending("/ImageCache")
     
-    if FileManager.default.fileExists(atPath: imageDiskCacheDirectoryPath) {
-      
-      return imageDiskCacheDirectoryPath
-    }
+    if FileManager.default.fileExists(atPath: imageDiskCacheDirectoryPath) { return imageDiskCacheDirectoryPath }
     
     do {
       

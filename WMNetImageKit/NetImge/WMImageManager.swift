@@ -23,12 +23,6 @@ public class WMImageManager: NSObject {
     imageQueue.maxConcurrentOperationCount = 3
   }
   
-  
-  func imageDiskCacheSize() {
-    
-    
-  }
-  
   /// 显示图片
   ///
   /// - Parameters:
@@ -122,11 +116,12 @@ public class WMImageManager: NSObject {
     }
   }
   
-  public class func cacheSize() -> Int64 {
-    
-    let size = WMImageStore.chacheSize()
-    
-    return size
+  /// 获取磁盘缓存的图片总大小
+  ///
+  /// - Returns: 缓存的图片大小，单位B
+  public class func sizeOfDiskCache() -> Int64 {
+        
+    return WMImageStore.chacheSize()
   }
   
   /// 清除磁盘缓存
@@ -147,10 +142,7 @@ public class WMImageManager: NSObject {
     let path = WMImageStore.imagePath(with: name)
     let url = URL(fileURLWithPath: path)
     
-    guard let imageData = UIImageJPEGRepresentation(image, 1) else {
-      
-      return nil
-    }
+    guard let imageData = UIImageJPEGRepresentation(image, 1) else { return nil }
     
     WMImageStore.toDisk(for: imageData, with: url, isReplace: true)
     

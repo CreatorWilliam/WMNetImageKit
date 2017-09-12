@@ -10,11 +10,15 @@ import Foundation
 
 extension Notification.Name {
  
+  /// 下载进度通知，UserInfo为：["ImageURL" : URL]
   static let WMImageDownloadProgressNotification: Notification.Name = Notification.Name("WMImageDownloadProgressNotification")
+  
+  /// 下载完成通知（暂未提供）
   static let WMImageDowmloadCompleteNotification: Notification.Name = Notification.Name("WMImageDowmloadCompleteNotification")
+  
 }
 
-internal class WMImageDownloader : NSObject {
+internal class WMImageDownloader: NSObject {
   
   typealias ProgressingAction = (_ received : Int64 ,_ total : Int64, _ partialData: Data?) -> Void
   typealias CompleteAction = (_ data: Data) -> Void
@@ -43,9 +47,15 @@ internal class WMImageDownloader : NSObject {
     super.init()
     
     //
-    sessionQueue.maxConcurrentOperationCount = 1
+    self.sessionQueue.maxConcurrentOperationCount = 1
    
   }
+  
+  deinit {
+    
+    self.session.invalidateAndCancel()
+  }
+  
 }
 
 internal extension WMImageDownloader {
@@ -71,29 +81,8 @@ internal extension WMImageDownloader {
     }
     downloader.completeActions[imageURL]?.append(complete)
     
-    var task = downloader.tasks[imageURL]
-    if let task = task {
-      
-      switch task.state {
-        
-      case .suspended:
-        
-        task.resume()
-        return
-        
-      case .running:
-        
-        return
-        
-      default: break
-        
-      }
-      
-    } else {
-      
-      task = downloader.session.dataTask(with: imageURL)
-    }
-    task?.resume()
+    let task = downloader.session.dataTask(with: imageURL)
+    task.resume()
     
     downloader.tasks[imageURL] = task
     downloader.datas[imageURL] = NSMutableData()
@@ -103,36 +92,28 @@ internal extension WMImageDownloader {
   class func pause(_ imageURL: URL) {
     
     let downloader = WMImageDownloader.default
-    guard let task = downloader.tasks[imageURL] else {
-      
-      return
-    }
     
-    switch task.state {
-    case .running:
-      
-      task.suspend()
-      
-    default:
-      return
-    }
+    //将要对应任务取消，同时去除相关的回调及任务和数据
+    downloader.tasks[imageURL]?.cancel()
+    downloader.tasks.removeValue(forKey: imageURL)
+    downloader.datas.removeValue(forKey: imageURL)
+    downloader.progressingActions.removeValue(forKey: imageURL)
+    downloader.completeActions.removeValue(forKey: imageURL)
+    
   }
+  
 }
 
 // MARK: - For ImageDataTask URLSessionDataDelegate
-extension WMImageDownloader : URLSessionDataDelegate {
+extension WMImageDownloader: URLSessionDataDelegate {
   
   func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
     
-    guard let imageURL = dataTask.originalRequest?.url else {
-      
-      return
-    }
+    /// 获取图片标识URL
+    guard let imageURL = dataTask.originalRequest?.url else { return }
     
-    guard let imageData = self.datas[imageURL] else {
-      
-      return
-    }
+    /// 获取对应的图片数据
+    guard let imageData = self.datas[imageURL] else { return }
     
     var isPostNotification : Bool = false
     if imageData.length == 0 {
@@ -163,19 +144,13 @@ extension WMImageDownloader : URLSessionDataDelegate {
 
 
 // MARK: - For ImageDataTask And ImageDownloadTask URLSessionDelegate
-extension WMImageDownloader : URLSessionDelegate {
+extension WMImageDownloader: URLSessionTaskDelegate {
   
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
     
-    guard let imageURL = task.originalRequest?.url else {
-      
-      return
-    }
+    guard let imageURL = task.originalRequest?.url else { return }
     
-    guard let imageData = self.datas[imageURL] else {
-      
-      return
-    }
+    guard let imageData = self.datas[imageURL] else { return }
     
     if let _ = error { return }
     if let actions = self.completeActions[imageURL] {
@@ -184,6 +159,7 @@ extension WMImageDownloader : URLSessionDelegate {
         
         action(imageData as Data)
       }
+      
     }
     
     self.tasks.removeValue(forKey: imageURL)
