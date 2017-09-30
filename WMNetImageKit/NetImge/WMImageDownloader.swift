@@ -150,6 +150,14 @@ extension WMImageDownloader: URLSessionTaskDelegate {
     
     guard let imageURL = task.originalRequest?.url else { return }
     
+    defer {
+      
+      self.tasks.removeValue(forKey: imageURL)
+      self.datas.removeValue(forKey: imageURL)
+      self.progressingActions.removeValue(forKey: imageURL)
+      self.completeActions.removeValue(forKey: imageURL)
+    }
+    
     guard let imageData = self.datas[imageURL] else { return }
     
     if let _ = error { return }
@@ -161,11 +169,6 @@ extension WMImageDownloader: URLSessionTaskDelegate {
       }
       
     }
-    
-    self.tasks.removeValue(forKey: imageURL)
-    self.datas.removeValue(forKey: imageURL)
-    self.progressingActions.removeValue(forKey: imageURL)
-    self.completeActions.removeValue(forKey: imageURL)
     
   }
   
