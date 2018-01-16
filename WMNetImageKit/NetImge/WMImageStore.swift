@@ -223,7 +223,7 @@ internal extension WMImageStore {
       
       try FileManager.default.createDirectory(atPath: imageDiskCacheDirectoryPath,
                                               withIntermediateDirectories: true,
-                                              attributes: [URLResourceKey.isExcludedFromBackupKey.rawValue : true])
+                                              attributes: [FileAttributeKey(rawValue: URLResourceKey.isExcludedFromBackupKey.rawValue) : true])
       
     } catch  {
       

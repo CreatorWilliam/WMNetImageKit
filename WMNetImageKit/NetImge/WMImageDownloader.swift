@@ -25,16 +25,7 @@ internal class WMImageDownloader: NSObject {
   
   static let `default` = WMImageDownloader()
   
-  fileprivate lazy var session: URLSession = {
-    
-    let configuration = URLSessionConfiguration.ephemeral
-    configuration.httpMaximumConnectionsPerHost = 4
-    
-    return URLSession(configuration: configuration,
-                      delegate: self,
-                      delegateQueue: self.sessionQueue)
-    
-  }()
+  fileprivate var session: URLSession?
   
   fileprivate lazy var sessionQueue: OperationQueue = OperationQueue()
   
@@ -46,14 +37,17 @@ internal class WMImageDownloader: NSObject {
   override init() {
     super.init()
     
+    let configuration = URLSessionConfiguration.default
+    configuration.httpMaximumConnectionsPerHost = 4
+    self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: self.sessionQueue)
     //
     self.sessionQueue.maxConcurrentOperationCount = 1
-   
+    
   }
   
   deinit {
     
-    self.session.invalidateAndCancel()
+    self.session?.invalidateAndCancel()
   }
   
 }
@@ -81,8 +75,8 @@ internal extension WMImageDownloader {
     }
     downloader.completeActions[imageURL]?.append(complete)
     
-    let task = downloader.session.dataTask(with: imageURL)
-    task.resume()
+    let task = downloader.session?.dataTask(with: imageURL)
+    task?.resume()
     
     downloader.tasks[imageURL] = task
     downloader.datas[imageURL] = NSMutableData()
