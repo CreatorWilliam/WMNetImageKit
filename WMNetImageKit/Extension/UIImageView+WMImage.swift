@@ -20,14 +20,14 @@ public extension UIImageView {
   ///   - mode: 图片绘制模式,默认为default
   ///   - ignore: 是否忽略设置历史
   ///   - handle: 设置图片后的操作
-  public func wm_setImage(url: URL,
+  public func wm_setImage(url: Any?,
                           placeholder: String? = nil,
                           loadType: LoadType = .none,
                           mode: UIImage.WMDrawMode = .default,
                           ignore: Bool = false,
                           handle: (() -> Void)? = nil) {
     
-    wm_showImage(url: url, placeholder: placeholder, loadType: loadType, mode: mode, ignore: ignore) { (image) in
+    wm_showImage(url, placeholder: placeholder, loadType: loadType, mode: mode, ignore: ignore) { (image) in
       
       self.image = image
       handle?()

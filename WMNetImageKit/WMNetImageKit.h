@@ -3,7 +3,7 @@
 //  WMNetImageKit
 //
 //  Created by William Lee on 2/7/17.
-//  Copyright © 2017年 William Lee. All rights reserved.
+//  Copyright © 2018年 William Lee. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

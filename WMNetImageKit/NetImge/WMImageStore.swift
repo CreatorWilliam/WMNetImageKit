@@ -67,15 +67,17 @@ internal extension WMImageStore {
         return
       }
     }
-    
-    do {
+    DispatchQueue.global().async {
       
-      try imageData.write(to: URL(fileURLWithPath: path))
-      
-    } catch {
-      
-      // TODO:图片写入磁盘异常处理(TODO)
-      return
+      do {
+        
+        try imageData.write(to: URL(fileURLWithPath: path))
+        
+      } catch {
+        
+        // TODO:图片写入磁盘异常处理(TODO)
+        return
+      }
     }
     
   }

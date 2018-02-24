@@ -92,18 +92,31 @@ extension UIView {
   /// 设置图片
   ///
   /// - Parameters:
-  ///   - url: 图片地址
+  ///   - originURL: 图片地址
   ///   - placeholder: 站位图
   ///   - loadType: 图片加载方式
   ///   - mode: 图片绘制模式
   ///   - ignore: 是否忽略设置历史。说明：视图与地址绑定后，之后若因其他原因设置视图图片为nil，会导致下次设置同样的地址时，无法显示图片，设置为true可以忽略此问题，默认为false是解决视图频繁设置图片导致的图片闪动
   ///   - handle: 如何设置图片
-  internal func wm_showImage(url: URL,
+  internal func wm_showImage(_ originURL: Any?,
                    placeholder: String?,
                    loadType: LoadType,
                    mode: UIImage.WMDrawMode,
                    ignore: Bool = false,
                    handle: @escaping ((UIImage?) -> Void)) {
+    
+    guard let urlString = originURL as? String else {
+      
+      guard let placeholder = placeholder else { return }
+      handle(UIImage(named: placeholder)?.wm_draw())
+      return
+    }
+    guard let url = URL(string: urlString) else {
+      
+      guard let placeholder = placeholder else { return }
+      handle(UIImage(named: placeholder)?.wm_draw())
+      return
+    }
     
     //过滤多次相同地址赋值
     if self.downloadingImageURL == url && !ignore { return }
