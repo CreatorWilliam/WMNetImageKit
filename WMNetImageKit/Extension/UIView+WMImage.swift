@@ -37,7 +37,7 @@ extension UIView {
       objc_setAssociatedObject(self,
                                &downloadingImageKey,
                                newValue,
-                               .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                               .OBJC_ASSOCIATION_RETAIN)
     }
     
     get {
@@ -60,7 +60,7 @@ extension UIView {
     }
     
     view = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    objc_setAssociatedObject(self, &indicatorKey, view, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    objc_setAssociatedObject(self, &indicatorKey, view, .OBJC_ASSOCIATION_RETAIN)
     self.addSubview(view)
     
     view.center = self.center
@@ -82,7 +82,7 @@ extension UIView {
     
     //只会创建一次
     view = UIProgressView(progressViewStyle: .bar)
-    objc_setAssociatedObject(self, &progressKey, view, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    objc_setAssociatedObject(self, &progressKey, view, .OBJC_ASSOCIATION_RETAIN)
     self.addSubview(view)
     view.center = self.center
     

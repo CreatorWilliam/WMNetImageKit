@@ -17,9 +17,11 @@ internal class WMImageStore {
   init() {
     
     NotificationCenter.default.addObserver(self,
-                                           selector: #selector(clearMemoryCache),
+                                           selector: #selector(self.clearMemoryCache),
                                            name: .UIApplicationDidReceiveMemoryWarning,
                                            object: nil)
+    
+    let _ = WMImageStore.cacheDirectoryPath()
   }
 }
 
@@ -186,21 +188,10 @@ internal extension WMImageStore {
     return size
   }
   
-  
-  
 }
 
-
+// MARK: - Internal
 internal extension WMImageStore {
-  
-  /// 根据图片地址生成图片名
-  ///
-  /// - Parameter imageSourceURL: 图片地址
-  /// - Returns: 图片名
-  fileprivate class func imageName(with imageSourceURL: URL) -> String {
-    
-    return imageSourceURL.absoluteString.wm_md5
-  }
   
   /// 根据图片名称获取图片缓存地址
   ///
@@ -238,6 +229,19 @@ internal extension WMImageStore {
   
 }
 
+// MARK: - Utility
+fileprivate extension WMImageStore {
+  
+  /// 根据图片地址生成图片名
+  ///
+  /// - Parameter imageSourceURL: 图片地址
+  /// - Returns: 图片名
+  class func imageName(with imageSourceURL: URL) -> String {
+    
+    return imageSourceURL.absoluteString.wm_md5
+  }
+  
+}
 
 
 

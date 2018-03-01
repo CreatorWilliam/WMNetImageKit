@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 public class WMImageManager: NSObject {
   
   public typealias ProgressingAction = (_ received : Int64 ,_ total : Int64, _ partialImage: UIImage) -> Void
@@ -20,7 +19,7 @@ public class WMImageManager: NSObject {
   override init() {
     super.init()
     
-    imageQueue.maxConcurrentOperationCount = 3
+    self.imageQueue.maxConcurrentOperationCount = 3
   }
   
   /// 显示图片
