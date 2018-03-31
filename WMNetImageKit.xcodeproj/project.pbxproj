@@ -16,6 +16,7 @@
 		3DDA8D0A1F162F050009C19E /* WMImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8D031F162F050009C19E /* WMImageUploader.swift */; };
 		3DDA8D0C1F162F490009C19E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDA8D0B1F162F490009C19E /* String+Extension.swift */; };
 		73F2E9A51F09394800A5CC62 /* WMNetImageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F2E9A31F09394800A5CC62 /* WMNetImageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB893F3D206F7FA60028CF2F /* OCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = BB893F3C206F7FA60028CF2F /* OCKit.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		73F2E9A01F09394800A5CC62 /* WMNetImageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WMNetImageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73F2E9A31F09394800A5CC62 /* WMNetImageKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMNetImageKit.h; sourceTree = "<group>"; };
 		73F2E9A41F09394800A5CC62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB893F3C206F7FA60028CF2F /* OCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCKit.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,12 +69,13 @@
 			path = NetImge;
 			sourceTree = "<group>";
 		};
-		3DDA8D0D1F1630640009C19E /* ModuleMap */ = {
+		3DDA8D0D1F1630640009C19E /* SupportSetting */ = {
 			isa = PBXGroup;
 			children = (
 				3DDA8D0E1F1630640009C19E /* module.modulemap */,
+				BB893F3C206F7FA60028CF2F /* OCKit.h */,
 			);
-			path = ModuleMap;
+			path = SupportSetting;
 			sourceTree = "<group>";
 		};
 		73F2E9961F09394800A5CC62 = {
@@ -95,9 +98,9 @@
 			isa = PBXGroup;
 			children = (
 				73F2E9A31F09394800A5CC62 /* WMNetImageKit.h */,
-				3DDA8D0D1F1630640009C19E /* ModuleMap */,
-				3DDA8CFB1F162F050009C19E /* Extension */,
 				3DDA8CFF1F162F050009C19E /* NetImae */,
+				3DDA8CFB1F162F050009C19E /* Extension */,
+				3DDA8D0D1F1630640009C19E /* SupportSetting */,
 				73F2E9A41F09394800A5CC62 /* Info.plist */,
 			);
 			path = WMNetImageKit;
@@ -110,6 +113,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB893F3D206F7FA60028CF2F /* OCKit.h in Headers */,
 				73F2E9A51F09394800A5CC62 /* WMNetImageKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,7 +334,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.william.WMNetImageKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/WMNetImageKit/ModuleMap/";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/WMNetImageKit/SupportSetting/";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -352,7 +356,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.william.WMNetImageKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/WMNetImageKit/ModuleMap/";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/WMNetImageKit/SupportSetting/";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};

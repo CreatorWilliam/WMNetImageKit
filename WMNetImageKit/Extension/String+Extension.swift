@@ -8,22 +8,22 @@
 
 import Foundation
 
-#if os(OSX)
-  import WMCommonCryptoMacOS
-#elseif os(iOS)
-#if (arch(i386) || arch(x86_64))
-  import WMCommonCryptoiPhoneSimulator
-  #else
-  import WMCommonCryptoiPhoneOS
-#endif
-#elseif os(watchOS)
-#if (arch(i386) || arch(x86_64))
-  import WMCommonCryptoWatchSimulator
-  #else
-  import WMCommonCryptoWatchOS
-#endif
-#endif
-
+//#if os(OSX)
+//  import WMCommonCryptoMacOS
+//#elseif os(iOS)
+//#if (arch(i386) || arch(x86_64))
+//  import WMCommonCryptoiPhoneSimulator
+//  #else
+//  import WMCommonCryptoiPhoneOS
+//#endif
+//#elseif os(watchOS)
+//#if (arch(i386) || arch(x86_64))
+//  import WMCommonCryptoWatchSimulator
+//  #else
+//  import WMCommonCryptoWatchOS
+//#endif
+//#endif
+import OCKit
 
 
 //enum CryptoAlgorithm {
@@ -104,7 +104,7 @@ public extension String  {
     for i in 0..<length {
       hash.appendFormat("%02x", bytes[i])
     }
-    bytes.deallocate(capacity: length)
+    bytes.deallocate()
     return String(format: hash as String)
   }
   
