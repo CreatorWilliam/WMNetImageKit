@@ -37,8 +37,6 @@ public class WMImageManager: NSObject {
     
     let size = target.bounds.size
     
-    DispatchQueue.global().async {
-      
       //从内存获取
       let drawedImage: UIImage? = WMImageStore.fromMemory(with: url)
       
@@ -68,36 +66,24 @@ public class WMImageManager: NSObject {
       //从网络获取
       WMImageDownloader.fromInternet(url, progress: { (recieved, total, partialData) in
         
-        if let imageData = partialData, let drawedImage = UIImage(data: imageData)?.wm_draw(size, mode: mode) {
+        guard let imageData = partialData, let drawedImage = UIImage(data: imageData)?.wm_draw(size, mode: mode) else { return }
+        DispatchQueue.main.async {
           
-          DispatchQueue.main.async {
-            
-            progress?(recieved, total, drawedImage)
-          }
+          progress?(recieved, total, drawedImage)
         }
         
       }, complete: { (imageData) in
         
-        guard let image = UIImage(data: imageData) else {
-          
-          return
-        }
-        
+        guard let image = UIImage(data: imageData) else { return }
         WMImageStore.toDisk(for: imageData, with: url)
+        guard let drawedImage = image.wm_draw(size, mode: mode) else { return }
+        WMImageStore.toMemory(for: drawedImage, with: url)
         
-        if let drawedImage = image.wm_draw(size, mode: mode) {
+        DispatchQueue.main.async {
           
-          WMImageStore.toMemory(for: drawedImage, with: url)
-          
-          DispatchQueue.main.async {
-            
-            complete(drawedImage)
-          }
+          complete(drawedImage)
         }
       })
-      
-      
-    }
     
   }
   
