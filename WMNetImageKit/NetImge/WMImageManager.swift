@@ -136,8 +136,6 @@ public class WMImageManager: NSObject {
   
   public class func storeImageFromInternet(_ url: URL, complete: @escaping CompleteAction) {
     
-    DispatchQueue.global().async {
-      
       //从磁盘获取
       if let image = WMImageStore.fromDisk(with: url) {
         
@@ -161,7 +159,6 @@ public class WMImageManager: NSObject {
       
     }
 
-  }
 }
 
 
