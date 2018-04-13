@@ -12,7 +12,7 @@ internal class WMImageStore {
   
   //let imageCache = NSCache<NSURL, UIImage>()
   var imageCache: [URL : UIImage] = [:]
-  fileprivate static let `default` = WMImageStore()
+  private static let `default` = WMImageStore()
   
   init() {
     
@@ -230,7 +230,7 @@ internal extension WMImageStore {
 }
 
 // MARK: - Utility
-fileprivate extension WMImageStore {
+private extension WMImageStore {
   
   /// 根据图片地址生成图片名
   ///

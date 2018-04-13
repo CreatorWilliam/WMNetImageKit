@@ -15,7 +15,7 @@ class WMImageUploader : NSObject {
   
   static let `default` = WMImageDownloader()
   
-  fileprivate lazy var session: URLSession = {
+  private lazy var session: URLSession = {
     
     let configuration = URLSessionConfiguration.ephemeral
     configuration.httpMaximumConnectionsPerHost = 4
@@ -26,12 +26,12 @@ class WMImageUploader : NSObject {
     
   }()
   
-  fileprivate lazy var sessionQueue: OperationQueue = OperationQueue()
+  private lazy var sessionQueue: OperationQueue = OperationQueue()
   
-  fileprivate var tasks = [URL : URLSessionTask]()
-  fileprivate var datas = [URL : NSMutableData]()
-  fileprivate var progressingActions = [URL : [ProgressingAction]]()
-  fileprivate var completeActions = [URL : [CompleteAction]]()
+  private var tasks = [URL : URLSessionTask]()
+  private var datas = [URL : NSMutableData]()
+  private var progressingActions = [URL : [ProgressingAction]]()
+  private var completeActions = [URL : [CompleteAction]]()
   
   override init() {
     super.init()

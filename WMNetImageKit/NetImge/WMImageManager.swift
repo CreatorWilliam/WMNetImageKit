@@ -13,8 +13,8 @@ public class WMImageManager: NSObject {
   public typealias ProgressingAction = (_ received : Int64 ,_ total : Int64, _ partialImage: UIImage) -> Void
   public typealias CompleteAction = (_ image: UIImage) -> Void
   
-  fileprivate static let `default` = WMImageManager()
-  fileprivate let imageQueue : OperationQueue = OperationQueue()
+  private static let `default` = WMImageManager()
+  private let imageQueue : OperationQueue = OperationQueue()
   
   override init() {
     super.init()
