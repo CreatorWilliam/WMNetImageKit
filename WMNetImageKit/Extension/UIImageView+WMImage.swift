@@ -27,7 +27,7 @@ public extension UIImageView {
                           ignore: Bool = false,
                           handle: (() -> Void)? = nil) {
     
-    wm_showImage(url, placeholder: placeholder, loadType: loadType, mode: mode, ignore: ignore) { (image) in
+    super.wm_showImage(url, placeholder: placeholder, loadType: loadType, mode: mode, ignore: ignore) { (image) in
       
       self.image = image
       handle?()
