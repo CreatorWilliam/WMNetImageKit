@@ -37,11 +37,11 @@ internal class WMImageDownloader: NSObject {
   override init() {
     super.init()
     
+    self.sessionQueue.maxConcurrentOperationCount = 1
     let configuration = URLSessionConfiguration.default
-    configuration.httpMaximumConnectionsPerHost = 4
+    configuration.httpMaximumConnectionsPerHost = 1
     self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: self.sessionQueue)
     //
-    self.sessionQueue.maxConcurrentOperationCount = 1
     
   }
   

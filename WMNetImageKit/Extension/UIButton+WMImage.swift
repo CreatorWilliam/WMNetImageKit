@@ -21,7 +21,7 @@ public extension UIButton {
   ///   - handle: 设置图片后的操作
   public func wm_setImage(url: Any?,
                           placeholder: String? = nil,
-                          loadType: LoadType = .realTime,
+                          loadType: LoadType = .none,
                           mode: UIImage.WMDrawMode = .default,
                           for state: UIControlState,
                           handle: (() -> Void)? = nil) {
