@@ -184,10 +184,10 @@ extension UIView {
     let complete: WMImageManager.CompleteAction = { [weak self] (image) in
       
       //确保重用过程中，图片完整刷新不错乱
-      if self?.downloadingImageURL != url {
-        
-        return
-      }
+      if self?.downloadingImageURL != url { return }
+      
+      // 清空下载链接与视图的对应关系
+      self?.downloadingImageURL = nil
       
       switch loadType {
         
