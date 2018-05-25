@@ -108,8 +108,7 @@ extension WMImageDownloader: URLSessionDataDelegate {
     
     /// 获取对应的图片数据
     guard let imageData = self.datas[imageURL] else { return }
-    
-    var isPostNotification : Bool = false
+    var isPostNotification: Bool = false
     if imageData.length == 0 {
       
       isPostNotification = true
