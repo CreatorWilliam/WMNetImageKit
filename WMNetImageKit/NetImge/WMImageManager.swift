@@ -122,7 +122,7 @@ public class WMImageManager: NSObject {
   ///   - image: 图片
   ///   - name: 图片名
   /// - Returns: 缓存图片所在地址
-  public class func storeImageFromImagePicker(_ image: UIImage, with name: String) -> URL? {
+  public class func storeImage(_ image: UIImage, with name: String) -> URL? {
     
     let path = WMImageStore.imagePath(with: name)
     let url = URL(fileURLWithPath: path)
@@ -134,7 +134,7 @@ public class WMImageManager: NSObject {
     return url
   }
   
-  public class func storeImageFromInternet(_ url: URL, complete: @escaping CompleteAction) {
+  public class func storeImage(_ url: URL, complete: @escaping CompleteAction) {
     
       //从磁盘获取
       if let image = WMImageStore.fromDisk(with: url) {
