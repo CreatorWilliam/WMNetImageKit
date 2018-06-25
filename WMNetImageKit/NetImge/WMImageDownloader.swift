@@ -8,16 +8,6 @@
 
 import Foundation
 
-extension Notification.Name {
- 
-  /// 下载进度通知，UserInfo为：["ImageURL" : URL]
-  static let WMImageDownloadProgressNotification: Notification.Name = Notification.Name("WMImageDownloadProgressNotification")
-  
-  /// 下载完成通知（暂未提供）
-  static let WMImageDowmloadCompleteNotification: Notification.Name = Notification.Name("WMImageDowmloadCompleteNotification")
-  
-}
-
 internal class WMImageDownloader: NSObject {
   
   typealias ProgressingAction = (_ received : Int64 ,_ total : Int64, _ partialData: Data?) -> Void
@@ -30,7 +20,7 @@ internal class WMImageDownloader: NSObject {
   private lazy var sessionQueue: OperationQueue = OperationQueue()
   
   private var tasks = [URL : URLSessionTask]()
-  private var datas = [URL : NSMutableData]()
+  private var datas = [URL : Data]()
   private var progressingActions = [URL : [ProgressingAction]]()
   private var completeActions = [URL : [CompleteAction]]()
   
@@ -61,6 +51,7 @@ internal extension WMImageDownloader {
     
     let downloader = WMImageDownloader.default
     
+    // 保存下载进度回调
     if let progress = progress {
       
       if downloader.progressingActions[imageURL] == nil {
@@ -69,6 +60,8 @@ internal extension WMImageDownloader {
       }
       downloader.progressingActions[imageURL]?.append(progress)
     }
+    
+    // 保存下载完成的回调
     if downloader.completeActions[imageURL] == nil {
       
       downloader.completeActions[imageURL] = []
@@ -79,7 +72,7 @@ internal extension WMImageDownloader {
     task?.resume()
     
     downloader.tasks[imageURL] = task
-    downloader.datas[imageURL] = NSMutableData()
+    downloader.datas[imageURL] = Data()
     
   }
   
@@ -89,11 +82,10 @@ internal extension WMImageDownloader {
     
     //将要对应任务取消，同时去除相关的回调及任务和数据
     downloader.tasks[imageURL]?.cancel()
-    downloader.tasks.removeValue(forKey: imageURL)
-    downloader.datas.removeValue(forKey: imageURL)
-    downloader.progressingActions.removeValue(forKey: imageURL)
-    downloader.completeActions.removeValue(forKey: imageURL)
-    
+    downloader.tasks[imageURL] = nil
+    downloader.datas[imageURL] = nil
+    downloader.progressingActions[imageURL] = nil
+    downloader.completeActions[imageURL] = nil
   }
   
 }
@@ -104,33 +96,25 @@ extension WMImageDownloader: URLSessionDataDelegate {
   func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
     
     /// 获取图片标识URL
-    guard let imageURL = dataTask.originalRequest?.url else { return }
+    guard let imageURL = dataTask.originalRequest?.url?.absoluteURL else { return }
     
     /// 获取对应的图片数据
+    self.datas[imageURL]?.append(data)
     guard let imageData = self.datas[imageURL] else { return }
-    var isPostNotification: Bool = false
-    if imageData.length == 0 {
-      
-      isPostNotification = true
-    }
-    imageData.append(data)
-    let recieved: Int64 = Int64(imageData.length)
+    
+    let recieved: Int64 = Int64(imageData.count)
     var total: Int64 = 0
     if let expectedContentLength = dataTask.response?.expectedContentLength {
       
       total = expectedContentLength
     }
-   
+    
     guard let progressingActions = self.progressingActions[imageURL] else { return }
     for action in progressingActions {
       
-      action(recieved, total, imageData as Data)
+      action(recieved, total, imageData)
     }
     
-    if isPostNotification {
-      
-      NotificationCenter.default.post(name: .WMImageDownloadProgressNotification, object: nil, userInfo: ["ImageURL" : imageURL])
-    }
   }
   
 }
@@ -141,7 +125,7 @@ extension WMImageDownloader: URLSessionTaskDelegate {
   
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
     
-    guard let imageURL = task.originalRequest?.url else { return }
+    guard let imageURL = task.originalRequest?.url?.absoluteURL else { return }
     
     defer {
       
@@ -154,14 +138,7 @@ extension WMImageDownloader: URLSessionTaskDelegate {
     guard let imageData = self.datas[imageURL] else { return }
     
     if let _ = error { return }
-    if let actions = self.completeActions[imageURL] {
-      
-      for action in actions {
-        
-        action(imageData as Data)
-      }
-      
-    }
+    self.completeActions[imageURL]?.forEach({ $0(imageData) })
     
   }
   
